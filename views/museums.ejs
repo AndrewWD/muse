@@ -2,10 +2,10 @@
 <div class="container">
     <header class="jumbotron">
         <div class="container">
-            <h1>The Best Campsites in World</h1>
-            <p>Choose your favorite from our selected campsites</p>
+            <h1>Various Museums in NYC</h1>
+            <p>Find your favorite from our selected museums</p>
             <div>
-                <a href="/campgrounds/new" class="btn btn-large btn-primary">add a new campsite</a>
+                <a href="/museums/new" class="btn btn-large btn-primary">add a new museum</a>
             </div>
         </div>
     </header>
@@ -13,19 +13,16 @@
 
 <div class="container" style="text-align: center"> 
     <div class="row" style="display: flex; flex-wrap: wrap">
-        <% campgrounds.forEach((campground)=>{ %>
+        <% museums.forEach((museum)=>{ %>
             <div class="col col-lg-3 col-md-6 col-12">
                 <div class="card" style="margin-bottom: 30px">
-                    <img class="card-img-top" src="<%= campground.image %>">
+                    <img class="card-img-top" src="<%= museum.image %>">
                     <div class="card-body">
-                        <h5 class="card-title"><%= campground.name %></h5>
+                        <h5 class="card-title"><%= museum.name %></h5>
                     </div>
                 </div>
             </div>
         <% }); %>
     </div>
 </div>
-
-
-
 <% include partials/footer %>
