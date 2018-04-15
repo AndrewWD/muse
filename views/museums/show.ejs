@@ -1,0 +1,13 @@
+<% include ../partials/header %>
+<h1><%= museum.name %></h1>
+<img src="<%= museum.image %>">
+<p><%= museum.description %></p>
+<a class="btn btn-primary" href="/museums/<%= museum._id %>/comments/new">Add a comment</a>
+<% museum.comments.forEach((val)=>{ %>
+    <div>
+        <strong><%= val.author %></strong>
+        <p><%= val.text %></p>
+    </div>
+<% }); %>
+<a href="/museums">Go Back</a>
+<% include ../partials/footer %>
