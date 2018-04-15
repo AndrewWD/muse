@@ -1,20 +1,12 @@
 const express = require('express'),
       app = express(),
       bodyparser = require('body-parser'),
-      mongoose = require('mongoose');
+      mongoose = require('mongoose'),
+      museum = require('./models/museum');
 
 app.set('view engine', 'ejs');
 app.use(bodyparser.urlencoded({extended: true}));
-mongoose.connect('mongodb://localhost/museums');
-
-
-const museumSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-
-const museum = mongoose.model('museum', museumSchema);
+mongoose.connect('mongodb://127.0.0.1/museums');
 
 app.get('/', (req, res)=>{
     res.render('landing');
@@ -31,11 +23,7 @@ app.get('/museums', (req, res)=>{
 });
 
 app.post('/museums', (req, res)=>{
-    let name = req.body.name;
-    let image = req.body.image;
-    let desc = req.body.description;
-    const newMuseum = {name: name, image: image, description: desc};
-    museum.create(newMuseum, (err, museums)=>{
+    museum.create(req.body.newMuseum, (err, museums)=>{
         if(err){
             console.log(err);
         } else{
@@ -57,6 +45,6 @@ app.get('/museums/show/:id', (req, res)=>{
         }
     });
 });
-app.listen(process.env.PORT, process.env.IP, ()=>{
+app.listen(3000, ()=>{
     console.log('The server has started!');
 });
