@@ -6,6 +6,7 @@ const express = require('express'),
       comment = require('./models/comment')
       seedDB = require('./seed');
 
+app.use(express.static(__dirname+ '/public'));
 app.set('view engine', 'ejs');
 app.use(bodyparser.urlencoded({extended: true}));
 mongoose.connect('mongodb://127.0.0.1/museums');
@@ -45,7 +46,7 @@ app.get('/museums/new', (req, res)=>{
 });
 
 //SHOW ROUTE
-app.get('/museums/show/:id', (req, res)=>{
+app.get('/museums/:id', (req, res)=>{
     museum.findById(req.params.id).populate('comments').exec((err, museum)=>{
         if(err){
             console.log(err);
@@ -78,7 +79,7 @@ app.post('/museums/:id/comments', (req, res)=>{
                 } else {
                     foundMuseum.comments.push(newComment);
                     foundMuseum.save(); 
-                    res.redirect('/museums/show/'+ req.params.id);
+                    res.redirect('/museums/'+ req.params.id);
                 }
             });
         }

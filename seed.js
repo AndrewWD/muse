@@ -23,7 +23,7 @@ let data = [
         image: 'https://media.timeout.com/images/102427507/750/562/image.jpg',
         description: 'After nearly 50 years in its Marcel-Breur-designed building on Madison Avenue at 75th Street, the Whitney Museum decamped in 2015 to a brand new home in Lower Manhattan\'s Meatpacking District, conceived by international starchitect Renzo Piano.'
     }
-]
+];
 
 function createDB(data) {
     data.forEach((val)=>{
