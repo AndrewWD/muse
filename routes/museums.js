@@ -43,6 +43,28 @@ router.get('/:id', (req, res)=>{
     });
 });
 
+//EDIT ROUTE for museum
+router.get('/:id/edit', (req, res)=>{
+    museum.findById(req.params.id, (err, foundMuseum)=>{
+        if (err){
+            console.log(err);
+        } else {
+            res.render('museums/edit', {foundMuseum: foundMuseum});
+        }
+    });
+});
+
+//UPDATE ROUTE for museum
+router.put('/:id', (req, res)=>{
+    museum.findByIdAndUpdate(req.params.id, req.body.newMuseum, (err, museum)=>{
+        if(err){
+            res.redirect('/museums');
+        } else{
+            res.redirect('/museums/' + museum._id);
+        }
+    });
+});
+
 //middleware to make sure the user is log in
 function isLogIn(req, res, next){
     if(req.isAuthenticated()){

@@ -1,0 +1,28 @@
+<% include ../partials/header %>
+<div class="container">
+    <div class="row justify-content-center" style="margin-bottom: 30px">
+        <div class="col col-auto">
+            <h1>Edit the <%= foundMuseum.name %></h1>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col col-7 col-md-5 col-lg-4">
+            <form action="/museums/<%= foundMuseum._id %>?_method=PUT" method="POST">
+                <div class="form-group">
+                    <input type="text" class="form-control" value= "<%=foundMuseum.name %>" name="newMuseum[name]">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" value="<%= foundMuseum.image %>" name="newMuseum[image]">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" value="<%= foundMuseum.description %>" name="newMuseum[description]">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="form-control btn btn-lg btn-primary">
+                </div>
+            </form>
+            <a href="/campgrounds">Go back</a>
+        </div>
+    </div>
+</div>
+<% include ../partials/footer %>
