@@ -49,7 +49,7 @@ function createDB(data) {
 
 function seedDB(){
     museum.remove({}).then(()=>{
-        return createDB(data);
+        createDB(data);
     }, (err)=>{
         console.log(err);
     });

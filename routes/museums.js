@@ -35,7 +35,6 @@ router.get('/:id', (req, res)=>{
         if(err){
             console.log(err);
         } else{
-            console.log(museum);
             res.render('museums/show', {museum: museum});
         }
     });
