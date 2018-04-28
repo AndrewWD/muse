@@ -23,7 +23,8 @@ router.post('/', isLogIn, (req, res)=>{
                 if (err) {
                     console.log(err);
                 } else {
-                    newComment.author = req.user.username;
+                    newComment.author.username = req.user.username;
+                    newComment.author.id = req.user._id;
                     newComment.save();
                     foundMuseum.comments.push(newComment);
                     foundMuseum.save(); 

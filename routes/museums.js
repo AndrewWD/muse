@@ -14,18 +14,21 @@ router.get('/', (req, res)=>{
 });
 
 //CREATE ROUTE for museum
-router.post('/', (req, res)=>{
+router.post('/', isLogIn, (req, res)=>{
     museum.create(req.body.newMuseum, (err, museums)=>{
         if(err){
             console.log(err);
         } else{
+          museums.author.id = req.user._id;
+          museums.author.username = req.user.username;
+          museums.save();
           res.redirect('/museums'); 
         }
     });
 });
 
 //NEW ROUTE for museum
-router.get('/new', (req, res)=>{
+router.get('/new', isLogIn, (req, res)=>{
     res.render('museums/new');
 });
 
@@ -39,5 +42,13 @@ router.get('/:id', (req, res)=>{
         }
     });
 });
+
+//middleware to make sure the user is log in
+function isLogIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/login');
+}
 
 module.exports = router;
