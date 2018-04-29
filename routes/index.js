@@ -43,12 +43,4 @@ router.get('/logout', (req, res)=>{
     res.redirect('/museums');
 });
 
-//middleware to make sure the user is log in
-function isLogIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect('/login');
-}
-
 module.exports = router;

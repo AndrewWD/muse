@@ -1,6 +1,7 @@
 const express = require('express'),
       router = express.Router(),
-      museum = require('../models/museum');
+      museum = require('../models/museum'),
+      middleware = require('../middleware');
       
 //INDEX ROUTE
 router.get('/', (req, res)=>{
@@ -14,7 +15,7 @@ router.get('/', (req, res)=>{
 });
 
 //CREATE ROUTE for museum
-router.post('/', isLogIn, (req, res)=>{
+router.post('/', middleware.isLogIn, (req, res)=>{
     museum.create(req.body.newMuseum, (err, museums)=>{
         if(err){
             console.log(err);
@@ -28,7 +29,7 @@ router.post('/', isLogIn, (req, res)=>{
 });
 
 //NEW ROUTE for museum
-router.get('/new', isLogIn, (req, res)=>{
+router.get('/new', middleware.isLogIn, (req, res)=>{
     res.render('museums/new');
 });
 
@@ -44,7 +45,7 @@ router.get('/:id', (req, res)=>{
 });
 
 //EDIT ROUTE for museum
-router.get('/:id/edit', checkOwnership, (req, res)=>{
+router.get('/:id/edit', middleware.checkOwnershipMuseum, (req, res)=>{
     museum.findById(req.params.id, (err, foundMuseum)=>{
         if (err){
             console.log(err);
@@ -55,7 +56,7 @@ router.get('/:id/edit', checkOwnership, (req, res)=>{
 });
 
 //UPDATE ROUTE for museum
-router.put('/:id', checkOwnership, (req, res)=>{
+router.put('/:id', middleware.checkOwnershipMuseum, (req, res)=>{
     museum.findByIdAndUpdate(req.params.id, req.body.newMuseum, (err, museum)=>{
         if(err){
             res.redirect('/museums');
@@ -66,7 +67,7 @@ router.put('/:id', checkOwnership, (req, res)=>{
 });
 
 //DELETE ROUTE for museum
-router.delete('/:id', checkOwnership, (req, res)=>{
+router.delete('/:id', middleware.checkOwnershipMuseum, (req, res)=>{
     museum.findByIdAndRemove(req.params.id, (err)=>{
         if(err){
             res.redirect('/museums');
@@ -75,30 +76,5 @@ router.delete('/:id', checkOwnership, (req, res)=>{
         }
     });
 });
-
-function checkOwnership(req, res, next){
-    if(req.isAuthenticated()){
-        museum.findById(req.params.id, (err, foundMuseum)=>{
-            if(err){
-                res.redirect('back');
-            } else {
-                if(foundMuseum.author.id.equals(req.user._id)){
-                    return next();
-                }
-                res.redirect('back');
-            }
-        });
-    } else {
-        res.redirect('back');
-    }
-}
-
-//middleware to make sure the user is log in
-function isLogIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect('/login');
-}
 
 module.exports = router;
