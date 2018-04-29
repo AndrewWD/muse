@@ -21,10 +21,14 @@
                     <p class="text-justify"><%= museum.description %></p>
                     <p><em>Submitted By <%= museum.author.username %></em></p>
                     <% if(currentUser && museum.author.id.equals(currentUser._id)) { %>
-                        <a class="btn btn-outline-dark" href="/museums/<%= museum._id %>/edit">Edit</a>
-                        <form id="delete-form" action="/museums/<%= museum._id %>?_method=DELETE" method="POST">
-                            <button class="btn btn-outline-dark">Delete</button>
-                        </form>
+                        <div class="row">
+                            <div class="col col-12 text-right">
+                                <a class="btn btn-outline-dark" href="/museums/<%= museum._id %>/edit">Edit</a>
+                                <form class="delete-form" action="/museums/<%= museum._id %>?_method=DELETE" method="POST">
+                                    <button class="btn btn-outline-dark">Delete</button>
+                                </form>
+                            </div>
+                        </div>
                     <% }; %>
                 </div>
             </div>
@@ -33,21 +37,35 @@
                     <a class="btn btn-success" href="/museums/<%= museum._id %>/comments/new">Add a comment</a>
                 </div>
                 <div class="card-body">
-                    <% museum.comments.forEach((val)=>{ %>
-                        <div class="row">
-                            <div class="col col-6">
-                                <strong><%= val.author.username %></strong>
-                            </div>
-                            <div class="col col-6 text-right">
-                                10 days ago
-                            </div>
+                    <% museum.comments.forEach((val, index)=>{ %>
+                        <div class="comment-body">
+                                <div class="row">
+                                    <div class="col col-6">
+                                        <strong><%= val.author.username %></strong>
+                                    </div>
+                                    <div class="col col-6 text-right">
+                                        10 days ago
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col col-12">
+                                        <p id="comment-text" ><%= val.text %></p>
+                                    </div>
+                                </div>
+                                <% if(currentUser && val.author.id.equals(currentUser._id)) { %>
+                                    <div class="row">
+                                        <div class="col col-12 text-right">
+                                            <a href="/museums/<%= museum._id %>/comments/<%= val._id %>/edit" class="btn btn-sm btn-outline-dark">Edit</a>
+                                            <form class="delete-form" action="/museums/<%= museum._id %>/comments/<%= val._id %>?_method=DELETE" method="POST">
+                                                <button class="btn btn-sm btn-outline-dark">Delete</button>
+                                            </form>
+                                        </div>
+                                    <% }; %>
+                                </div>
                         </div>
-                        <div class="row">
-                            <div class="col col-12">
-                                <p><%= val.text %></p>
-                            </div>
-                        </div>
-                        <a href="/museums/<%= museum._id %>/comments/<%= val._id %>/edit" class="btn btn-sm btn-outline-dark">Edit</a>
+                        <% if(index != museum.comments.length - 1) { %>
+                            <hr>
+                        <% }; %>
                     <% }); %>
                 </div>   
             </div>

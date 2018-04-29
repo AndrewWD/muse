@@ -80,18 +80,17 @@ function checkOwnership(req, res, next){
     if(req.isAuthenticated()){
         museum.findById(req.params.id, (err, foundMuseum)=>{
             if(err){
-                console.log(err);
+                res.redirect('back');
             } else {
                 if(foundMuseum.author.id.equals(req.user._id)){
                     return next();
                 }
-                res.send('You are not allowed to do that!');
+                res.redirect('back');
             }
         });
     } else {
-        res.send('You should log in first');
+        res.redirect('back');
     }
-
 }
 
 //middleware to make sure the user is log in

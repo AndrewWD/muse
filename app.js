@@ -44,7 +44,7 @@ app.use('/', indexRouter);
 
 
 //Initialize the data 
-seedDB();
+//seedDB();
 
 app.listen(3000, ()=>{
     console.log('The server has started!');

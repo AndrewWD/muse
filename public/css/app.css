@@ -6,6 +6,10 @@
     margin: 20px 5px;
 }
 
-#delete-form{
+.delete-form{
     display: inline-block;
+}
+
+#comment-text{
+    margin: 10px 0;
 }

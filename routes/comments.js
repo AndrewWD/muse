@@ -36,7 +36,7 @@ router.post('/', isLogIn, (req, res)=>{
 });
 
 //EDIT ROUTE for comment
-router.get('/:commentId/edit', (req, res)=>{
+router.get('/:commentId/edit', checkOwnershipComment, (req, res)=>{
     comment.findById(req.params.commentId, (err, foundComment)=>{
         if(err){
             res.redirect('back');
@@ -47,11 +47,22 @@ router.get('/:commentId/edit', (req, res)=>{
 });
 
 //UPDATE ROUTE for comment
-router.put('/:commentId', (req, res)=>{
+router.put('/:commentId', checkOwnershipComment, (req, res)=>{
     comment.findByIdAndUpdate(req.params.commentId, req.body.newComment ,(err, newComment)=>{
         if(err){
             res.redirect('back');
         } else{
+            res.redirect('/museums/' + req.params.id);
+        }
+    });
+});
+
+//DELETE ROUTE for comment
+router.delete('/:commentId', checkOwnershipComment, (req, res)=>{
+    comment.findByIdAndRemove(req.params.commentId, (err)=>{
+        if(err){
+            res.redirect('back');
+        } else {
             res.redirect('/museums/' + req.params.id);
         }
     });
@@ -62,6 +73,23 @@ function isLogIn(req, res, next){
         return next();
     }
     res.redirect('/login');
+}
+
+function checkOwnershipComment(req, res, next){
+    if(req.isAuthenticated()){
+        comment.findById(req.params.commentId, (err, foundComment)=>{
+            if(err){
+                res.redirect('back');
+            } else {
+                if(foundComment.author.id.equals(req.user._id)){
+                    return next();
+                }
+                res.redirect('back');
+            }
+        });
+    } else {
+        res.redirect('back');
+    }
 }
 
 module.exports = router;
