@@ -35,6 +35,28 @@ router.post('/', isLogIn, (req, res)=>{
     });
 });
 
+//EDIT ROUTE for comment
+router.get('/:commentId/edit', (req, res)=>{
+    comment.findById(req.params.commentId, (err, foundComment)=>{
+        if(err){
+            res.redirect('back');
+        } else {
+            res.render('comments/edit', {foundComment: foundComment, museumId: req.params.id})
+        }
+    });
+});
+
+//UPDATE ROUTE for comment
+router.put('/:commentId', (req, res)=>{
+    comment.findByIdAndUpdate(req.params.commentId, req.body.newComment ,(err, newComment)=>{
+        if(err){
+            res.redirect('back');
+        } else{
+            res.redirect('/museums/' + req.params.id);
+        }
+    });
+});
+
 function isLogIn(req, res, next){
     if(req.isAuthenticated()){
         return next();

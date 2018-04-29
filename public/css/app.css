@@ -5,3 +5,7 @@
 #go-back{
     margin: 20px 5px;
 }
+
+#delete-form{
+    display: inline-block;
+}
