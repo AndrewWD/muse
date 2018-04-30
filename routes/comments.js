@@ -7,7 +7,7 @@ const express = require('express'),
 router.get('/new', middleware.isLogIn, (req, res)=>{
     museum.findById(req.params.id, (err, foundMuseum)=>{
         if(err) {
-            console.log(err);
+            req.flash('error', err.message);
         } else {
             res.render('comments/new', {foundMuseum: foundMuseum});
         }
@@ -18,7 +18,7 @@ router.get('/new', middleware.isLogIn, (req, res)=>{
 router.post('/', middleware.isLogIn, (req, res)=>{
     museum.findById(req.params.id, (err, foundMuseum)=>{
         if(err) {
-            console.log(err);
+            req.flash('error', err.message);
         } else {
             comment.create(req.body.newComment, (err, newComment)=>{
                 if (err) {
@@ -40,6 +40,7 @@ router.post('/', middleware.isLogIn, (req, res)=>{
 router.get('/:commentId/edit', middleware.checkOwnershipComment, (req, res)=>{
     comment.findById(req.params.commentId, (err, foundComment)=>{
         if(err){
+            req.flash('error', err.message);
             res.redirect('back');
         } else {
             res.render('comments/edit', {foundComment: foundComment, museumId: req.params.id})
@@ -51,6 +52,7 @@ router.get('/:commentId/edit', middleware.checkOwnershipComment, (req, res)=>{
 router.put('/:commentId', middleware.checkOwnershipComment, (req, res)=>{
     comment.findByIdAndUpdate(req.params.commentId, req.body.newComment ,(err, newComment)=>{
         if(err){
+            req.flash('error', err.message);
             res.redirect('back');
         } else{
             res.redirect('/museums/' + req.params.id);

@@ -17,10 +17,11 @@ router.post('/register', (req, res)=>{
     let newUser = new user({username: req.body.username}); 
     user.register(newUser, req.body.password, (err, user)=>{
         if(err){
-            console.log(err);
+            req.flash('error', err.message);
             return res.redirect('/register');
         }
         passport.authenticate('local')(req, res, ()=>{
+            req.flash('success', 'Welcome, ' + user.username + '!');
             res.redirect('/museums')
         });
     });
@@ -28,7 +29,7 @@ router.post('/register', (req, res)=>{
 
 //Show Login page
 router.get('/login', (req, res)=>{
-    res.render('login');
+    res.render('login', {message: req.flash('error')});
 });
 
 //Handling login logic
@@ -40,6 +41,7 @@ router.post('/login', passport.authenticate('local', {
 //LOGOUT ROUTE
 router.get('/logout', (req, res)=>{
     req.logout();
+    req.flash('success', 'Logged you out');
     res.redirect('/museums');
 });
 

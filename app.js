@@ -5,11 +5,10 @@ const express = require('express'),
       passport = require('passport'),
       passportLocal = require('passport-local'),
       expressSession = require('express-session'),
-      museum = require('./models/museum'),
-      comment = require('./models/comment'),
+      methodOverride = require('method-override'),
       user = require('./models/user'),
-      seedDB = require('./seed'),
-      methodOverride = require('method-override');
+      flash = require('connect-flash');
+
 
 const museumRouter = require('./routes/museums'),
       commentRouter = require('./routes/comments'),
@@ -19,6 +18,7 @@ app.use(express.static(__dirname+ '/public'));
 app.set('view engine', 'ejs');
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
+app.use(flash());
 mongoose.connect('mongodb://127.0.0.1/museums');
 
 //Passport configuration
@@ -34,6 +34,8 @@ passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
 app.use((req, res, next)=>{
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash('error');
+    res.locals.success = req.flash('success');
     next();
 });
 
