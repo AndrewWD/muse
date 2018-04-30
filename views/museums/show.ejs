@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <div class="row">
                         <h5 class="col col-9"><a href="#"><%= museum.name %></a></h5>
-                        <h5 class="col col-3 text-right">ticket: $9.00</h5>
+                        <h5 class="col col-3 text-right">ticket: $<%= museum.price %></h5>
                     </div>
                     <p class="text-justify"><%= museum.description %></p>
                     <p><em>Submitted By <%= museum.author.username %></em></p>
