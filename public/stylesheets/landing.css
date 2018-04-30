@@ -1,0 +1,88 @@
+body {
+    background-color: #000;
+}
+
+
+#landing-header {
+    z-index: 1;
+    position: relative;
+    text-align: center;
+    padding-top: 40vh;
+}
+
+#landing-header h1 {
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.slideshow { 
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.slideshow li { 
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    opacity: 0;
+    z-index: 0;
+    animation: imageAnimation 40s linear infinite; 
+}
+
+.slideshow li:nth-child(1) { 
+    background-image: url(https://i.ytimg.com/vi/hqjz8n0NJYA/maxresdefault.jpg) 
+}
+
+.slideshow li:nth-child(2) { 
+    background-image: url(https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1525054461&di=620c8998625a77a1199cc21761e0c6fc&src=http://s3img.city.sina.com.cn/travel/trip/trip_day_child_img/1418278835355_0.jpg);
+    animation-delay: 8s; 
+}
+
+.slideshow li:nth-child(3) { 
+    background-image: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525659353&di=44b58db48e127637b78554a5d695dcd9&imgtype=jpg&er=1&src=http%3A%2F%2Fyouimg1.c-ctrip.com%2Ftarget%2F100p0a0000004nu5qF3E5.jpg);
+    animation-delay: 16s; 
+}
+
+.slideshow li:nth-child(4) { 
+    background-image: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525064700147&di=9b95d80be3e1a0fffef99f7fe0fc265d&imgtype=0&src=http%3A%2F%2Flmaos.co.uk%2Fwp-content%2Fuploads%2F2017%2F08%2F002_moma_theredlist.jpg);
+    animation-delay: 24s; 
+}
+
+.slideshow li:nth-child(5) { 
+    background-image: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525064794808&di=7d19808f05d38b41501039245617c0c4&imgtype=0&src=http%3A%2F%2Fwww.crainsnewyork.com%2Fapps%2Fpbcsi.dll%2Fstoryimage%2FCN%2F20130412%2FREAL_ESTATE%2F130419943%2FAR%2F0%2FGuggenheim-Museum.jpg%3Fq%3D100);
+    animation-delay: 32s; 
+}
+
+@keyframes imageAnimation { 
+    0% { 
+      opacity: 0; 
+      animation-timing-function: ease-in;
+    }
+    8% {
+      opacity: 1;
+      animation-timing-function: ease-out;
+    }
+    16% {
+      opacity: 1
+    }
+    24% {
+      opacity: 0
+    }
+}
+
+/* Older browser support - .no-cssanimations class added by modernizr */
+.no-cssanimations .slideshow li {
+	opacity: 1;
+}
