@@ -20,7 +20,7 @@ app.use(bodyparser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(flash());
 // mongoose.connect('mongodb://127.0.0.1/museums');
-mongoose.connect('mongodb://jincaidiyi:hrtwg477@ds119772.mlab.com:19772/muse-project');
+mongoose.connect(process.env.DATABASEURL);
 
 //Passport configuration
 app.use(expressSession({
