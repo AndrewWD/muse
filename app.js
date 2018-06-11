@@ -20,6 +20,7 @@ app.use(bodyparser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(flash());
 // mongoose.connect('mongodb://127.0.0.1/museums');
+const url = process.env.DATABASEURL || '127.0.0.1/museums'
 mongoose.connect(process.env.DATABASEURL);
 
 //Passport configuration
