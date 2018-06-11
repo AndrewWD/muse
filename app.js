@@ -19,7 +19,8 @@ app.set('view engine', 'ejs');
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(flash());
-mongoose.connect('mongodb://127.0.0.1/museums');
+// mongoose.connect('mongodb://127.0.0.1/museums');
+mongoose.connect('mongodb://jincaidiyi:hrtwg477@ds119772.mlab.com:19772/muse-project');
 
 //Passport configuration
 app.use(expressSession({
@@ -48,6 +49,10 @@ app.use('/', indexRouter);
 //Initialize the data 
 //seedDB();
 
-app.listen(3000, ()=>{
+// app.listen(3000, ()=>{
+//     console.log('The server has started!');
+// });
+
+app.listen(process.env.PORT, process.env.IP, ()=>{
     console.log('The server has started!');
 });
